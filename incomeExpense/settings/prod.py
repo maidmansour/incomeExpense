@@ -8,7 +8,7 @@ DEBUG = False
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 CSRF_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
+#SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 
 # Database
