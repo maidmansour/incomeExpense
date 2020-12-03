@@ -1,0 +1,49 @@
+{% extends "base_auth.html" %}
+
+{% block content %}
+<div class="panel-body">
+    <div class="omb_login">
+        <h3 class="omb_authTitle">Sign up or <a href="#">Login</a></h3>
+        
+        <div class="row omb_row-sm-offset-3">
+            <div class="col-xs-12 col-sm-6">
+                <hr class="omb_hrOr">
+            </div>
+        </div>
+
+        <div class="row omb_row-sm-offset-3">
+            <div class="col-xs-12 col-sm-6">	
+                <form class="omb_loginForm" action="" autocomplete="off" method="POST">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                        <input type="text" class="form-control" name="username" id="usernameField" placeholder="Username">
+                    </div>
+                    <span class="help-block"></span>
+
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                        <input type="email" class="form-control" name="email" id="emailField" placeholder="Email Address">
+                    </div>
+                    <span class="help-block"></span>
+                                        
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                        <input  type="password" class="form-control" name="password" id="passwordField" placeholder="Password">
+                    </div>
+                    <span class="help-block"></span>
+
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                        <input  type="password" class="form-control" name="confirmPassword" id="confirmPasswordField" placeholder="Confirm Password">
+                    </div>
+                    <span class="help-block"></span>
+
+                    <button class="btn btn-lg btn-info btn-block" type="submit">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel-footer">Panel footer</div>
+
+{% endblock%}
