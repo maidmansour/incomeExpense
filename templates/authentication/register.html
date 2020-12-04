@@ -17,13 +17,13 @@
                     {% csrf_token %}
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                        <input type="text" class="form-control" name="username" id="usernameField" placeholder="Username">
+                        <input type="text" class="form-control" name="username" value="{{ fieldValue.username }}" id="usernameField" placeholder="Username">
                     </div>
                     <div class="help-block usernameFeed" style="display:none"></div>
 
                     <div class="input-group top-button">
                         <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                        <input type="email" class="form-control" name="email" id="emailField" placeholder="Email Address">
+                        <input type="email" class="form-control" name="email" value="{{ fieldValue.email }}" id="emailField" placeholder="Email Address">
                     </div>
                     <div class="help-block emailFeed" style="display:none"></div>
                                         
@@ -39,7 +39,7 @@
                     </div>
                     <span class="help-block passwordConfirmFeed" style="display:none"></span>
 
-                    <button class="btn btn-lg btn-info btn-block top-button" type="submit">Register</button>
+                    <button class="btn btn-lg btn-info btn-block top-button submit-btn" type="submit">Register</button>
                 </form>
             </div>
         </div>

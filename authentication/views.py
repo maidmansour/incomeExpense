@@ -18,14 +18,28 @@ class RegisterView(View):
 
     def post(self, request):
         data = request.POST
-        print(len(data['username']))
-        if(len(data['username'])==0 or len(data['email'])==0 or len(data['password'])==0):
-            messages.error(request, 'Invalid data', extra_tags='danger')
+        context = {
+                'fieldValue':data
+            }
+        if(len(data['username'])>0 and len(data['email'])>0 and len(data['password'])>0):
+            if not User.objects.filter(username=data['username']).exists():
+                if not User.objects.filter(email=data['email']).exists():
+                    user = User.objects.create(username=data['username'],email=data['email'])
+                    user.set_password(data['password'])
+                    messages.success(request, 'Successfuly registered.')
+                    return render(request, self.template_name)
+                else:
+                    messages.error(request, 'Email already taken', extra_tags='danger')
+                    return render(request, self.template_name, context=context)
+            else:
+                messages.error(request, 'Username already taken', extra_tags='danger')
+                return render(request, self.template_name, context=context)
         else:
-            User.objects.create(username=data['username'],email=data['email'], password=data['password'])
-            messages.success(request, 'Successfuly registered.')
+            messages.error(request, 'Invalid data', extra_tags='danger')
+            return render(request, self.template_name, context=context)
+            
 
-        return render(request, self.template_name)
+        
 
 class ValidateUsernameView(View):
     def post(self, request):

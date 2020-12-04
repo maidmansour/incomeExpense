@@ -7,7 +7,8 @@ const passwordField = document.querySelector('#passwordField');
 const passwordConfirmField = document.querySelector('#passwordConfirmField')
 const passwordFeed = document.querySelector('.passwordFeed');
 const passwordConfirmFeed = document.querySelector('.passwordConfirmFeed');
-
+const submitField = document.querySelector('.submit-btn');
+let error_exist = false;
 emailField.addEventListener('keyup', (e)=>{
     const emailVal = e.target.value;
     emailField.parentNode.classList.remove('has-error');
@@ -22,13 +23,15 @@ emailField.addEventListener('keyup', (e)=>{
         .then(res=>res.json())
         .then(data=>{
             if(data.email_error){
-                console.log('data', data.email_error)
                 emailField.parentNode.classList.add('has-error');
                 emailFeed.innerHTML=`<p>${data.email_error}</p>`;
                 emailFeed.style.display="block";
+                error_exist = true;
             }
+            changeSubmitStatus();
         });
     }
+    
 });
 
 usernameField.addEventListener('keyup',(e)=>{
@@ -49,11 +52,15 @@ usernameField.addEventListener('keyup',(e)=>{
                 console.log('data', data);
                 usernameField.parentNode.classList.add('has-error');
                 usernameFeed.style.display ="block";
-                usernameFeed.innerHTML=`<p>${data.username_error}</p>`
-
-            }   
+                usernameFeed.innerHTML=`<p>${data.username_error}</p>`;
+                error_exist = true;                
+            }
+            changeSubmitStatus();
+            
         });
     }
+
+    
 });
 
 passwordField.addEventListener('keyup',(e)=>{
@@ -64,20 +71,24 @@ passwordField.addEventListener('keyup',(e)=>{
     passwordConfirmField.parentNode.classList.remove('has-error');
     passwordConfirmFeed.style.display="none";
     passwordConfirmFeed.innerHTML ="";
+
     if(passwordVal.length>0){
         if(passwordVal.length<8){
             passwordField.parentNode.classList.add('has-error');
             passwordFeed.style.display="block";
             passwordFeed.innerHTML ="<p>Password must conatain 8 characters or more";
+            error_exist = true;
         }
         
         if(passwordConfirmField.value && passwordVal!=passwordConfirmField.value){
             passwordConfirmField.parentNode.classList.add('has-error');
             passwordConfirmFeed.style.display="block";
             passwordConfirmFeed.innerHTML ="<p>Passwords not match";
+            error_exist = true;
         }
         
     }
+    changeSubmitStatus()
 });
 
 passwordConfirmField.addEventListener('keyup', (e)=>{
@@ -90,6 +101,18 @@ passwordConfirmField.addEventListener('keyup', (e)=>{
     if(passwordVal.length>0 && passwordField.value != passwordVal){
         passwordConfirmField.parentNode.classList.add('has-error');
         passwordConfirmFeed.style.display = "block";
-        passwordConfirmFeed.innerHTML = "<p>Passwords not match</p>"
+        passwordConfirmFeed.innerHTML = "<p>Passwords not match</p>";
+        error_exist = true;
     }
-})
+    changeSubmitStatus();
+});
+function changeSubmitStatus(){
+    console.log('here');
+    console.log(error_exist);
+    if(error_exist){
+        submitField.setAttribute('disabled', 'disabled');
+        error_exist = false;
+    }else{
+        submitField.removeAttribute('disabled');
+    }
+}
