@@ -1,7 +1,12 @@
+'use strict'
 const usernameField = document.querySelector('#usernameField');
 const emailField = document.querySelector('#emailField');
 const usernameFeed = document.querySelector('.usernameFeed');
 const emailFeed = document.querySelector('.emailFeed');
+const passwordField = document.querySelector('#passwordField');
+const passwordConfirmField = document.querySelector('#passwordConfirmField')
+const passwordFeed = document.querySelector('.passwordFeed');
+const passwordConfirmFeed = document.querySelector('.passwordConfirmFeed');
 
 emailField.addEventListener('keyup', (e)=>{
     const emailVal = e.target.value;
@@ -51,3 +56,40 @@ usernameField.addEventListener('keyup',(e)=>{
     }
 });
 
+passwordField.addEventListener('keyup',(e)=>{
+    const passwordVal = e.target.value;
+    passwordField.parentNode.classList.remove('has-error');
+    passwordFeed.style.display = "none";
+    passwordFeed.innerHTML ="";
+    passwordConfirmField.parentNode.classList.remove('has-error');
+    passwordConfirmFeed.style.display="none";
+    passwordConfirmFeed.innerHTML ="";
+    if(passwordVal.length>0){
+        if(passwordVal.length<8){
+            passwordField.parentNode.classList.add('has-error');
+            passwordFeed.style.display="block";
+            passwordFeed.innerHTML ="<p>Password must conatain 8 characters or more";
+        }
+        
+        if(passwordConfirmField.value && passwordVal!=passwordConfirmField.value){
+            passwordConfirmField.parentNode.classList.add('has-error');
+            passwordConfirmFeed.style.display="block";
+            passwordConfirmFeed.innerHTML ="<p>Passwords not match";
+        }
+        
+    }
+});
+
+passwordConfirmField.addEventListener('keyup', (e)=>{
+    const passwordVal = e.target.value;
+    //Init
+    passwordConfirmField.parentNode.classList.remove('has-error');
+    passwordConfirmFeed.style.display = "none";
+    passwordConfirmFeed.innerHTML = ""
+    //
+    if(passwordVal.length>0 && passwordField.value != passwordVal){
+        passwordConfirmField.parentNode.classList.add('has-error');
+        passwordConfirmFeed.style.display = "block";
+        passwordConfirmFeed.innerHTML = "<p>Passwords not match</p>"
+    }
+})

@@ -4,6 +4,8 @@ from django.http import JsonResponse
 from django.contrib.auth.models import User
 from validate_email import validate_email
 import json
+from django.contrib import messages
+
 
 class LoginView(View):
     def get(self, request):
@@ -11,6 +13,13 @@ class LoginView(View):
 
 class RegisterView(View):
     def get(self, request):
+        return render(request, 'authentication/register.html')
+
+    def post(self, request):
+        # messages.info(request, 'Three credits remain in your account.')
+        # messages.success(request, 'Profile details updated.')
+        # messages.warning(request, 'Your account expires in three days.')
+        # messages.error(request, 'Document deleted.', extra_tags='danger')
         return render(request, 'authentication/register.html')
 
 class ValidateUsernameView(View):

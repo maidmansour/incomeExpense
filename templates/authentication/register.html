@@ -4,7 +4,7 @@
 <div class="panel-body">
     <div class="omb_login">
         <h3 class="omb_authTitle">Sign up or <a href="#">Login</a></h3>
-        
+        {% include "partials/_messages.html" %}
         <div class="row omb_row-sm-offset-3">
             <div class="col-xs-12 col-sm-6">
                 <hr class="omb_hrOr">
@@ -13,7 +13,8 @@
 
         <div class="rowomb_row-sm-offset-3">
             <div class="col-xs-12 col-sm-6 col-md-offset-3 ">	
-                <form class="omb_loginForm" action="" autocomplete="off" method="POST">
+                <form class="omb_loginForm" action="{% url 'register' %}" autocomplete="off" method="POST">
+                    {% csrf_token %}
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
                         <input type="text" class="form-control" name="username" id="usernameField" placeholder="Username">
@@ -30,13 +31,13 @@
                         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                         <input  type="password" class="form-control" name="password" id="passwordField" placeholder="Password">
                     </div>
-                    <span class="help-block" style="display:none"></span>
+                    <span class="help-block passwordFeed" style="display:none"></span>
 
                     <div class="input-group top-button">
                         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                        <input  type="password" class="form-control" name="confirmPassword" id="confirmPasswordField" placeholder="Confirm Password">
+                        <input  type="password" class="form-control" name="confirmPassword" id="passwordConfirmField" placeholder="Confirm Password">
                     </div>
-                    <span class="help-block" style="display:none"></span>
+                    <span class="help-block passwordConfirmFeed" style="display:none"></span>
 
                     <button class="btn btn-lg btn-info btn-block top-button" type="submit">Register</button>
                 </form>
