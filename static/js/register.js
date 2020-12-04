@@ -12,6 +12,8 @@ let username_error_exist = false;
 let password_error_exist = false;
 let passwordConfirm_error_exist = false;
 let email_error_exist = false;
+
+
 emailField.addEventListener('keyup', (e)=>{
     const emailVal = e.target.value;
     emailField.parentNode.classList.remove('has-error');
@@ -85,7 +87,6 @@ passwordField.addEventListener('keyup',(e)=>{
             passwordFeed.style.display="block";
             passwordFeed.innerHTML ="<p>Password must conatain 8 characters or more";
             password_error_exist = true;
-            console.log('here passworde error',password_error_exist);
         }else{
             password_error_exist = false;
         }
@@ -123,12 +124,6 @@ passwordConfirmField.addEventListener('keyup', (e)=>{
     changeSubmitStatus();
 });
 function changeSubmitStatus(){
-    console.log('here');
-    console.log('email_error_exist',email_error_exist);
-    console.log('username_error_exist',username_error_exist);
-    console.log('password_error_exist',password_error_exist);
-    console.log('passwordConfirm_error_exist',passwordConfirm_error_exist);
-    let error_exist= email_error_exist || username_error_exist || password_error_exist || passwordConfirm_error_exist;
     if(error_exist){
         submitField.setAttribute('disabled', 'disabled');
     }else{
