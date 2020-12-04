@@ -3,7 +3,7 @@
 {% block content %}
 <div class="panel-body">
     <div class="omb_login">
-        <h3 class="omb_authTitle">Sign up or <a href="#">Login</a></h3>
+        <h3 class="omb_authTitle">Sign up or <a href="{% url 'login' %}">Login</a></h3>
         {% include "partials/_messages.html" %}
         <div class="row omb_row-sm-offset-3">
             <div class="col-xs-12 col-sm-6">

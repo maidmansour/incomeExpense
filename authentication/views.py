@@ -11,6 +11,7 @@ from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeEr
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.sites.shortcuts import get_current_site
 from .utils import token_generator
+from django.contrib import auth
 
 
 class RegisterView(View):
@@ -19,6 +20,10 @@ class RegisterView(View):
         return render(request, self.template_name)
 
     def post(self, request):
+
+        storage = messages.get_messages(request)
+        storage.used = True
+        
         data = request.POST
         context = {
                 'fieldValue':data
@@ -53,7 +58,7 @@ class RegisterView(View):
                     email.send(fail_silently=False)
 
                     #Flash Message
-                    messages.success(request, 'Successfuly registered.')
+                    messages.success(request, 'Successfuly registered, an activation mail have been sent to '+ data['email'])
                     return render(request, self.template_name)
                 else:
                     messages.error(request, 'Email already taken', extra_tags='danger')
@@ -114,3 +119,42 @@ class ValidateEmailView(View):
 class LoginView(View):
     def get(self, request):
         return render(request, 'authentication/login.html')
+
+    def post(self, request):
+
+        storage = messages.get_messages(request)
+        storage.used = True
+
+        username = data = request.POST['username']
+        password = data = request.POST['password']
+
+        if username and password :
+            user = auth.authenticate(username=username, password=password)
+            print('User found : ')
+            print(user is not None)
+            if user:
+                print('active : ' + str(user.is_active))
+                if user.is_active:
+
+                    auth.login(request, user)
+                    messages.success(request, 'Welcome, ' +
+                        user.username + ' you are now logged in')
+                    return redirect('index')
+
+                messages.error(request, 'Account is not active, please check your email', extra_tags='danger')
+                return render(request, 'authentication/login.html')
+            
+            messages.error(request, 'Invalid credentials, try again', extra_tags='danger')
+            return render(request, 'authentication/login.html')
+        
+        messages.error(request, 'Please fill all fields', extra_tags='danger')
+        return render(request, 'authentication/login.html')
+
+
+class LogoutView(View):
+    def get(self, request):
+        auth.logout(request)
+        storage = messages.get_messages(request)
+        storage.used = True
+        messages.info(request, 'You are now logget out')
+        return redirect('login')
