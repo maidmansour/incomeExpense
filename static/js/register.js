@@ -8,7 +8,10 @@ const passwordConfirmField = document.querySelector('#passwordConfirmField')
 const passwordFeed = document.querySelector('.passwordFeed');
 const passwordConfirmFeed = document.querySelector('.passwordConfirmFeed');
 const submitField = document.querySelector('.submit-btn');
-let error_exist = false;
+let username_error_exist = false;
+let password_error_exist = false;
+let passwordConfirm_error_exist = false;
+let email_error_exist = false;
 emailField.addEventListener('keyup', (e)=>{
     const emailVal = e.target.value;
     emailField.parentNode.classList.remove('has-error');
@@ -26,7 +29,9 @@ emailField.addEventListener('keyup', (e)=>{
                 emailField.parentNode.classList.add('has-error');
                 emailFeed.innerHTML=`<p>${data.email_error}</p>`;
                 emailFeed.style.display="block";
-                error_exist = true;
+                email_error_exist = true;
+            }else{
+                email_error_exist = false;
             }
             changeSubmitStatus();
         });
@@ -53,7 +58,9 @@ usernameField.addEventListener('keyup',(e)=>{
                 usernameField.parentNode.classList.add('has-error');
                 usernameFeed.style.display ="block";
                 usernameFeed.innerHTML=`<p>${data.username_error}</p>`;
-                error_exist = true;                
+                username_error_exist = true;                
+            }else{
+                username_error_exist = false;   
             }
             changeSubmitStatus();
             
@@ -77,15 +84,22 @@ passwordField.addEventListener('keyup',(e)=>{
             passwordField.parentNode.classList.add('has-error');
             passwordFeed.style.display="block";
             passwordFeed.innerHTML ="<p>Password must conatain 8 characters or more";
-            error_exist = true;
+            password_error_exist = true;
+            console.log('here passworde error',password_error_exist);
+        }else{
+            password_error_exist = false;
         }
         
         if(passwordConfirmField.value && passwordVal!=passwordConfirmField.value){
             passwordConfirmField.parentNode.classList.add('has-error');
             passwordConfirmFeed.style.display="block";
             passwordConfirmFeed.innerHTML ="<p>Passwords not match";
-            error_exist = true;
+            passwordConfirm_error_exist = true;
+        }else{
+            passwordConfirm_error_exist = false;
         }
+
+
         
     }
     changeSubmitStatus()
@@ -102,16 +116,21 @@ passwordConfirmField.addEventListener('keyup', (e)=>{
         passwordConfirmField.parentNode.classList.add('has-error');
         passwordConfirmFeed.style.display = "block";
         passwordConfirmFeed.innerHTML = "<p>Passwords not match</p>";
-        error_exist = true;
+        passwordConfirm_error_exist = true;
+    }else{
+        passwordConfirm_error_exist = false;
     }
     changeSubmitStatus();
 });
 function changeSubmitStatus(){
     console.log('here');
-    console.log(error_exist);
+    console.log('email_error_exist',email_error_exist);
+    console.log('username_error_exist',username_error_exist);
+    console.log('password_error_exist',password_error_exist);
+    console.log('passwordConfirm_error_exist',passwordConfirm_error_exist);
+    let error_exist= email_error_exist || username_error_exist || password_error_exist || passwordConfirm_error_exist;
     if(error_exist){
         submitField.setAttribute('disabled', 'disabled');
-        error_exist = false;
     }else{
         submitField.removeAttribute('disabled');
     }

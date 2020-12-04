@@ -26,6 +26,8 @@ class RegisterView(View):
                 if not User.objects.filter(email=data['email']).exists():
                     user = User.objects.create(username=data['username'],email=data['email'])
                     user.set_password(data['password'])
+                    user.is_active=False
+                    user.save()
                     messages.success(request, 'Successfuly registered.')
                     return render(request, self.template_name)
                 else:
