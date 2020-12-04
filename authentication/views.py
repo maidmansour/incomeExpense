@@ -12,15 +12,20 @@ class LoginView(View):
         return render(request, 'authentication/login.html')
 
 class RegisterView(View):
+    template_name = 'authentication/register.html'
     def get(self, request):
-        return render(request, 'authentication/register.html')
+        return render(request, self.template_name)
 
     def post(self, request):
-        # messages.info(request, 'Three credits remain in your account.')
-        # messages.success(request, 'Profile details updated.')
-        # messages.warning(request, 'Your account expires in three days.')
-        # messages.error(request, 'Document deleted.', extra_tags='danger')
-        return render(request, 'authentication/register.html')
+        data = request.POST
+        print(len(data['username']))
+        if(len(data['username'])==0 or len(data['email'])==0 or len(data['password'])==0):
+            messages.error(request, 'Invalid data', extra_tags='danger')
+        else:
+            User.objects.create(username=data['username'],email=data['email'], password=data['password'])
+            messages.success(request, 'Successfuly registered.')
+
+        return render(request, self.template_name)
 
 class ValidateUsernameView(View):
     def post(self, request):
